@@ -11,31 +11,28 @@ jobs:
         with:
           node-version: 20
       
-      - name: Install & Build Web
+      - name: Force Install & Create Android
         run: |
           npm install
-          npm run build --if-present
-
-      - name: Setup Android Machine
-        run: |
           npm install @capacitor/core @capacitor/cli @capacitor/android
-          npx cap add android || true
+          npm run build --if-present
+          # Perintah sakti untuk membuat folder android yang hilang:
+          npx cap add android || true 
           npx cap sync android
 
-      - name: set up JDK 21
+      - name: set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '21'
+          java-version: '17'
           distribution: 'temurin'
-          cache: gradle
 
-      - name: Build APK (Fix Java 21 & Clean)
+      - name: Build APK Final
         run: |
           cd android
           chmod +x gradlew
           ./gradlew clean
           ./gradlew assembleDebug --no-daemon
-          
+
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:

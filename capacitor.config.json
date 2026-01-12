@@ -1,0 +1,6 @@
+{
+  "appId": "com.livestream.companion",
+  "appName": "TikTok Live Companion",
+  "webDir": "dist",
+  "bundledWebRuntime": false
+}

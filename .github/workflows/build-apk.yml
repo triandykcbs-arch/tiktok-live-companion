@@ -12,16 +12,21 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Build with Gradle
+      - name: Cari dan Build APK
         run: |
-          if [ -d "android" ]; then
-            cd android
-            chmod +x gradlew
-            ./gradlew assembleDebug
-          else
-            chmod +x gradlew
-            ./gradlew assembleDebug
+          # Mencari file gradlew di seluruh folder
+          GRADLEW_PATH=$(find . -name gradlew | head -n 1)
+          if [ -z "$GRADLEW_PATH" ]; then
+            echo "Error: File gradlew tidak ditemukan. Pastikan folder android sudah ter-upload."
+            exit 1
           fi
+          
+          GRADLE_DIR=$(dirname "$GRADLEW_PATH")
+          echo "Ditemukan gradlew di: $GRADLE_DIR"
+          
+          chmod +x "$GRADLEW_PATH"
+          cd "$GRADLE_DIR"
+          ./gradlew assembleDebug
 
       - name: Upload APK
         uses: actions/upload-artifact@v3

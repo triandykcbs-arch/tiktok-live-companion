@@ -22,19 +22,20 @@ jobs:
           npx cap add android || true
           npx cap sync android
 
-      - name: set up JDK 21
+      - name: set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '21' # Diubah ke 21 agar cocok dengan kodingan Anda
+          java-version: '17'
           distribution: 'temurin'
           cache: gradle
 
-      - name: Build APK
+      - name: Build APK (Pembersihan Total)
         run: |
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug
-
+          ./gradlew clean  # Menghapus file sampah yang bikin tabrakan
+          ./gradlew assembleDebug --no-daemon
+          
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:

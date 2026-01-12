@@ -1,0 +1,8 @@
+{
+  "name": "TikTok Live Streamer Companion",
+  "description": "A portrait-oriented stream companion with swappable camera and video overlays, plus a music playlist manager for TikTok live gaming.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ]
+}

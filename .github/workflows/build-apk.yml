@@ -11,16 +11,20 @@ jobs:
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: gradle
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x android/gradlew
 
       - name: Build with Gradle
-        run: cd android && ./gradlew assembleDebug
+        run: |
+          if [ -d "android" ]; then
+            cd android
+            chmod +x gradlew
+            ./gradlew assembleDebug
+          else
+            chmod +x gradlew
+            ./gradlew assembleDebug
+          fi
 
       - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
           name: app-debug
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: "**/*.apk"

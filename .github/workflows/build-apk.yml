@@ -1,4 +1,4 @@
-name: Build Android APK
+name: Deploy Web App
 on: [push]
 
 jobs:
@@ -11,30 +11,13 @@ jobs:
         with:
           node-version: 20
       
-      - name: Force Install & Create Android
+      - name: Install & Build
         run: |
           npm install
-          npm install @capacitor/core @capacitor/cli @capacitor/android
           npm run build --if-present
-          # Perintah sakti untuk membuat folder android yang hilang:
-          npx cap add android || true 
-          npx cap sync android
 
-      - name: set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Build APK Final
-        run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew clean
-          ./gradlew assembleDebug --no-daemon
-
-      - name: Upload APK
+      - name: Upload Web Result
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: web-dist
+          path: dist/ # Folder hasil kodingan web Anda

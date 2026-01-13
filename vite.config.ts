@@ -21,3 +21,11 @@ export default defineConfig(({ mode }) => {
       }
     };
 });
+import { defineConfig } from 'vite'
+import react from '@vitejs/react-swc'
+
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
+  base: '/tiktok-live-companion/', // Tambahkan baris ini sesuai nama repo Anda
+})
